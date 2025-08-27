@@ -1,4 +1,4 @@
-# Polaris Data Whisperer - LLM-Based Data Analysis
+# Datapilot - LLM-Based Data Analysis
 
 A modern web application for AI-powered data analysis using CSV files and natural language queries.
 
