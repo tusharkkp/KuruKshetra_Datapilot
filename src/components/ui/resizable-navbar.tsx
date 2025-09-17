@@ -238,7 +238,7 @@ export const NavbarLogo = () => {
           <path d="M4 6h16v2H4V6zm0 5h16v2H4v-2zm0 5h16v2H4v-2z"/>
         </svg>
       </div>
-      <span className="text-lg font-bold text-foreground truncate overflow-hidden">AI Data Analyst</span>
+      <span className="text-lg font-bold text-foreground truncate overflow-hidden">DataPilot</span>
     </a>
   );
 };
