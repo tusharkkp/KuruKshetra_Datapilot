@@ -38,9 +38,9 @@ const Navbar = () => {
           <a href="#how-it-works" className="text-foreground hover:text-primary transition-colors duration-300 font-medium">
             How it Works
           </a>
-          <a href="#pricing" className="text-foreground hover:text-primary transition-colors duration-300 font-medium">
+          <button onClick={() => navigate('/pricing')} className="text-foreground hover:text-primary transition-colors duration-300 font-medium">
             Pricing
-          </a>
+          </button>
         </div>
 
         <div className="flex items-center space-x-4">

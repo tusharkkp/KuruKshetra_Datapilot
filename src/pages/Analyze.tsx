@@ -8,7 +8,7 @@ import { DataTable } from '@/components/ui/data-table';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { Upload, FileText, Sparkles, Loader2, MessageSquare, AlertCircle } from 'lucide-react';
+import { Upload, FileText, Sparkles, Loader2, MessageSquare, AlertCircle, Bot, Brain, Gem } from 'lucide-react';
 import { uploadDataset, analyzeData, checkServerHealth, type DatasetInfo, type AnalysisResult } from '@/lib/apiService';
 
 const Analyze = () => {
@@ -19,6 +19,7 @@ const Analyze = () => {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
   const [serverHealthy, setServerHealthy] = useState<boolean | null>(null);
+  const [selectedModel, setSelectedModel] = useState<'gemini' | 'gpt4' | 'claude'>('gemini');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Check server health on component mount
@@ -166,6 +167,25 @@ const Analyze = () => {
                     <p className="text-sm text-muted-foreground mb-2">Columns: <span className="text-foreground">{dataset.columns.length}</span></p>
                     <p className="text-sm text-muted-foreground">Table: <span className="text-foreground">{dataset.table}</span></p>
                   </div>
+                  <div className="text-left bg-background/50 rounded-lg p-4 mb-6 border border-polaris-purple/20">
+                    <p className="text-sm font-medium text-foreground mb-3">Suggested prompts</p>
+                    <div className="flex flex-wrap gap-2">
+                      {[
+                        'Show summary statistics for this dataset.',
+                        'What are the top-performing categories?',
+                        'Generate a correlation heatmap.',
+                        'What is the average value per category?',
+                      ].map((p) => (
+                        <button
+                          key={p}
+                          onClick={() => setQuestion(p)}
+                          className="text-xs px-3 py-1 rounded-full border border-polaris-purple/30 hover:border-polaris-purple/60 hover:bg-polaris-purple/10 text-foreground transition-colors"
+                        >
+                          {p}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                   <Button
                     onClick={() => {
                       setUploadedFile(null);
@@ -222,6 +242,30 @@ const Analyze = () => {
                   <h2 className="text-2xl font-bold text-foreground">Ask a Question</h2>
                 </div>
                 
+                <div className="mb-4 grid grid-cols-3 gap-2">
+                  <button
+                    onClick={() => setSelectedModel('gemini')}
+                    className={`flex items-center justify-center gap-2 px-3 py-2 rounded-lg border text-sm ${selectedModel === 'gemini' ? 'border-polaris-purple bg-polaris-purple/10' : 'border-polaris-purple/30 hover:border-polaris-purple/60'}`}
+                    title="Gemini (active)"
+                  >
+                    <Gem className="w-4 h-4 text-polaris-purple" /> Gemini
+                  </button>
+                  <button
+                    onClick={() => setSelectedModel('claude')}
+                    className={`flex items-center justify-center gap-2 px-3 py-2 rounded-lg border text-sm ${selectedModel === 'claude' ? 'border-polaris-purple bg-polaris-purple/10' : 'border-polaris-purple/30 hover:border-polaris-purple/60'}`}
+                    title="Claude (UI only)"
+                  >
+                    <Brain className="w-4 h-4" /> Claude
+                  </button>
+                  <button
+                    onClick={() => setSelectedModel('gpt4')}
+                    className={`flex items-center justify-center gap-2 px-3 py-2 rounded-lg border text-sm ${selectedModel === 'gpt4' ? 'border-polaris-purple bg-polaris-purple/10' : 'border-polaris-purple/30 hover:border-polaris-purple/60'}`}
+                    title="GPT-4 (UI only)"
+                  >
+                    <Bot className="w-4 h-4" /> GPT-4
+                  </button>
+                </div>
+
                 <div className="space-y-4">
                   <Input
                     placeholder="What insights would you like from your data? (e.g., 'What is the average sales by region?')"

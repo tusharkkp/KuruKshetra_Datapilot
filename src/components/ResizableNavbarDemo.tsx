@@ -29,7 +29,7 @@ export default function ResizableNavbarDemo() {
     },
     {
       name: "Pricing",
-      link: "#pricing",
+      link: "/pricing",
     },
   ];
 
